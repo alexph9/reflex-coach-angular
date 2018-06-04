@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-2">
+      <ul class="list-group">
+          <li class="list-group-item" (click)="setChart('line')">Line</li>
+          <li class="list-group-item" (click)="setChart('bar')">Bar</li>
+          <li class="list-group-item" (click)="setChart('radar')">Radar</li>
+          <li class="list-group-item">Porta ac consectetur ac</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+  </div>
+  <div class="col-10">
+    <div>
+      <canvas id="canvas">{{ chart }}</canvas>
+    </div>
+  </div>
+</div>
