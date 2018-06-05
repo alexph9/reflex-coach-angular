@@ -12,6 +12,8 @@ import { ChartComponent } from './pages/chart/chart.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthService } from './services/auth.service';
+import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+
 
 
 // firebase
@@ -38,9 +40,10 @@ import {environment} from '../environments/environment';
     AngularFireModule.initializeApp(environment.fireabase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    FormsModule
+    FormsModule,
+    FlashMessagesModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
