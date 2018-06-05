@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/chart']);
     }).catch ( (err) => {
       console.log(err);
+      this.router.navigate(['/register']);
     })
   }
 
