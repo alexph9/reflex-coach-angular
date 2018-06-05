@@ -22,6 +22,20 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  onClickFacebookBtn(){
+    this.authService.loginFacebook()
+      .then((res) => {
+        this.flashMessage.show('The user was logged in succesfully',
+        {cssClass: 'alert-success', timeout: 2500});
+        this.router.navigate(['/chart']);
+      }).catch ( (err) => {
+        console.log(err);
+        this.flashMessage.show(err.message,
+        {cssClass: 'alert-danger', timeout: 2500});
+        this.router.navigate(['/login']);
+      })
+  }
+
   onClickGoogleBtn(){
     this.authService.loginGoogle()
       .then((res) => {

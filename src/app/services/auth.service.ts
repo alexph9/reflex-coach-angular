@@ -11,7 +11,7 @@ export class AuthService {
 
   constructor( public afAuth: AngularFireAuth, private router: Router) { }
 
-  register(email: string, password: string){
+  register(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then( userData => resolve(userData),
@@ -19,7 +19,7 @@ export class AuthService {
     });
   }
 
-  login(email: string, password: string){
+  login(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then( userData => resolve(userData),
@@ -27,17 +27,21 @@ export class AuthService {
     });
   }
 
-  getAuth(){
+  getAuth() {
     return this.afAuth.authState.pipe(map (auth => auth));
   }
 
-  logout(){
+  logout() {
     this.router.navigate(['/']);
     return this.afAuth.auth.signOut();
   }
 
-  loginGoogle(){
+  loginGoogle() {
     return this.afAuth.auth.signInWithPopup( new firebase.auth.GoogleAuthProvider)
+  }
+
+  loginFacebook() {
+    return this.afAuth.auth.signInWithPopup( new firebase.auth.FacebookAuthProvider)
   }
 
 }
