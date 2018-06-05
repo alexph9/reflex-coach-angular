@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  fireabase: {
+  firebase: {
     apiKey: "AIzaSyAaMyQhLiwHaMCOtE9x-Qq1_t9vWW1boOc",
     authDomain: "reflex-coach.firebaseapp.com",
     databaseURL: "https://reflex-coach.firebaseio.com",
