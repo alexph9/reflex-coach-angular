@@ -1,3 +1,4 @@
+import { DataProviderService } from './services/dataProvider/data-provider.service';
 import { AuthGuard } from './guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -11,7 +12,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ChartComponent } from './pages/chart/chart.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 
 
@@ -43,7 +44,7 @@ import {environment} from '../environments/environment';
     FormsModule,
     FlashMessagesModule
   ],
-  providers: [AuthService, AuthGuard, FlashMessagesService],
+  providers: [AuthService, AuthGuard, FlashMessagesService, DataProviderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

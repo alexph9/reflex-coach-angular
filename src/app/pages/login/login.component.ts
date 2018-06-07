@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
@@ -40,12 +40,12 @@ export class LoginComponent implements OnInit {
     this.authService.loginTwitter()
       .then((res) => {
         this.flashMessage.show('The user was logged in succesfully',
-        {cssClass: 'alert-success', timeout: 2500});
+        {cssClass: 'alert-success', timeout: 3500});
         this.router.navigate(['/chart']);
       }).catch ( (err) => {
         console.log(err);
         this.flashMessage.show(err.message,
-        {cssClass: 'alert-danger', timeout: 2500});
+        {cssClass: 'alert-danger', timeout: 3500});
         this.router.navigate(['/login']);
       })
   }
@@ -54,12 +54,12 @@ export class LoginComponent implements OnInit {
     this.authService.loginGoogle()
       .then((res) => {
         this.flashMessage.show('The user was logged in succesfully',
-        {cssClass: 'alert-success', timeout: 2500});
+        {cssClass: 'alert-success', timeout: 3500});
         this.router.navigate(['/chart']);
       }).catch ( (err) => {
         console.log(err);
         this.flashMessage.show(err.message,
-        {cssClass: 'alert-danger', timeout: 2500});
+        {cssClass: 'alert-danger', timeout: 3500});
         this.router.navigate(['/login']);
       })
   }
@@ -68,12 +68,12 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.email, this.password)
     .then( (res) => {
       this.flashMessage.show('The user was logged in succesfully',
-      {cssClass: 'alert-success', timeout: 2500});
+      {cssClass: 'alert-success', timeout: 3500});
       this.router.navigate(['/chart']);
     }).catch ( (err) => {
       console.log(err);
       this.flashMessage.show(err.message,
-      {cssClass: 'alert-danger', timeout: 2500});
+      {cssClass: 'alert-danger', timeout: 3500});
       this.router.navigate(['/login']);
     })
   }

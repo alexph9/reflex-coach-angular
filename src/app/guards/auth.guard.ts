@@ -1,4 +1,4 @@
-import { AuthService } from './../services/auth.service';
+import { AuthService } from './../services/auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
