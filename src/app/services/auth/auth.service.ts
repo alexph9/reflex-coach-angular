@@ -1,62 +1,61 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { AngularFireDatabase } from 'angularfire2/database';
+import { UserService } from '../user/user.service';
+import { User } from '../../models/user';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService{
 
   constructor( 
     public afAuth: AngularFireAuth, 
     private router: Router,
     public afDatabase: AngularFireDatabase,
+    private userService: UserService,
   ) {
-    this.data = afDatabase.list("users").valueChanges();
-    console.log(this.data);
    }
-
-  protected data: Observable<any>;
-  protected newId : number;
   
   register(email: string, password: string) {
     return new Promise((resolve, reject) => {
-      this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
+      this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then( (userData) => {
         resolve(userData);
-        this.resolveData();
+        this.registerUserDB(email)
       },
       err => reject(err));
     });
   }
 
-  getDataFromDatabase(){
-    return this.data.pipe(map(res => res));
+  registerUserDB(email){
+    // let usersList = this.userService.getUserList();
+    // console.log(usersList);
+    // console.log(email);
+    // let id 
+    // id = this.obtainNewId(usersList[usersList.length-1].$key);
+    // this.userService.createUserObject(id, email);
+    
+    /*this.userService.createUserObject("00002", email);*/
   }
 
-  resolveData(){
-    this.getDataFromDatabase().subscribe(data =>{
-      this.newId = parseInt(data[data.length-1].id);
-      this.fillId
-      
-
-    })
-  }
-
-  fillId(num) {
-    const fullDigits : number = 5;
-    let restDigits : number = fullDigits - num.toString().length;
-    var id;
-    for(var i = 0; i< restDigits; i++) {
-      id += "0";
+  obtainNewId(lastId){
+    for(var i = lastId.length - 1 ; i >= 0; i-- ){
+      if(lastId[i] === '4'){
+        lastId[i] = '0';
+      } else {
+        lastId[i] = (parseInt(lastId[i]) + 1).toString;
+        console.log(lastId);
+        return lastId;
+      }
+      return "55555";
     }
-    id += num.toString();
-    return id;
   }
 
   login(email: string, password: string) {
