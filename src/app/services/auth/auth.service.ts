@@ -3,25 +3,31 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
-import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from '../user/user.service';
 import { User } from '../../models/user';
-
-
+import { Observable } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService{
 
+  user : User = {
+    id: '',
+    email: '',
+  }
+
+  users: User[];
+  newId: string;
+  userRegistered: boolean = false;
+
   constructor( 
     public afAuth: AngularFireAuth, 
     private router: Router,
-    public afDatabase: AngularFireDatabase,
     private userService: UserService,
-  ) {
-   }
+  ) {}
+
   
   register(email: string, password: string) {
     return new Promise((resolve, reject) => {
@@ -35,28 +41,42 @@ export class AuthService{
   }
 
   registerUserDB(email){
-    // let usersList = this.userService.getUserList();
-    // console.log(usersList);
-    // console.log(email);
-    // let id 
-    // id = this.obtainNewId(usersList[usersList.length-1].$key);
-    // this.userService.createUserObject(id, email);
-    
-    /*this.userService.createUserObject("00002", email);*/
+    this.userService.getAllUsers().subscribe(users => {
+      this.users = users;
+      let maxId : string = '00000';
+      for(var i = 0; i < this.users.length - 1; i++){
+        if(parseInt(maxId) < parseInt(this.users[i].id) ){
+          maxId = this.users[i].id;
+        }
+      }
+      if(!this.userRegistered){
+        this.obtainNewId(maxId, email);
+      }
+    });
+    this.userRegistered = false;
   }
 
-  obtainNewId(lastId){
+ obtainNewId(lastId, email){
+  this.user.id = "55555";
+  let idAux : any = lastId.split("");
+  if(!this.userRegistered){
     for(var i = lastId.length - 1 ; i >= 0; i-- ){
-      if(lastId[i] === '4'){
-        lastId[i] = '0';
+      if(idAux[i] === '4'){
+        idAux[i] = '0';
       } else {
-        lastId[i] = (parseInt(lastId[i]) + 1).toString;
+        idAux[i] = parseInt(idAux[i]) + 1;
+        idAux[i].toString();
+        lastId = idAux.join('');
         console.log(lastId);
-        return lastId;
+        break;
       }
-      return "55555";
     }
   }
+  this.user.id = lastId;
+  this.user.email = email;
+  this.userService.addNewUser(this.user);
+  this.userRegistered = true;
+ }
 
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {

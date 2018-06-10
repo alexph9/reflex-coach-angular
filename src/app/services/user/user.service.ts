@@ -1,43 +1,58 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import { User } from '../../models/user';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/operators";
 
 @Injectable()
 
 export class UserService {
-  usersList: AngularFireList<any>;
-  public selectedUser: User = new User(); 
+  userCollection: AngularFirestoreCollection<User>;
+  userDocument: AngularFirestoreDocument<User>;
+  users: Observable<User[]>;
+  user: Observable<User>;
 
-  constructor(private db: AngularFireDatabase) {
-   }
+  constructor(private firestone: AngularFirestore) {
+    this.userCollection = this.firestone.collection<User>('users');
+  }
 
-   createUserObject($key, email) {
-    let user: User = {
-      $key,
-      email,
-    }
-    this.createUser(user);
-   }
+  addNewUser(user: User){
+    this.userCollection.add(user);
+  }
 
-   createUser(user: User){
-     console.log(this.usersList)
-     this.usersList.push(user);
-   }
+  getAllUsers():Observable<User[]>{
+    return this.users = this.userCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as User;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
 
-   updateUserEmail(user: User){
-     this.usersList.update(user.$key, {
-       email: user.email
-     });
-   }
-
-   getUserList(){
-     return this.usersList = this.db.list('users');
-   }
-
-   deleteUser($key: string){
-     this.usersList.remove($key);
-   }
-
+  getOneUser(idUser: string){
+    this.userDocument = this.firestone.doc<User>(`users/${idUser}`);
+    this.user = this.userDocument.snapshotChanges().pipe(
+      map(action => {
+        if(action.payload.exists === false){
+          return null;
+        }else{
+          const data = action.payload.data() as User;
+          data.id = action.payload.id;
+          return data;
+        }
+      })
+    );
+    return this.user;
+  }
+  updateUser(user: User){
+    this.userDocument = this.firestone.doc(`users/${user.id}`);
+    this.userDocument.update(user);
+  }
+  deleteUser(user: User){
+    this.userDocument = this.firestone.doc(`users/${user.id}`);
+    this.userDocument.delete();
+  }
 }
 
 

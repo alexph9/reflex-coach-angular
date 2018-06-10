@@ -1,4 +1,4 @@
-export class User {
-    $key: string; 
+export interface User {
+    id: string; 
     email: string;
 }
