@@ -11,13 +11,15 @@ export class DataProviderService {
   userDocument: AngularFirestoreDocument<User>;
   users: Observable<User[]>;
   user: Observable<User>;
+  public id: string;
 
   constructor(private firestone: AngularFirestore) {
     this.userCollection = this.firestone.collection<User>('users');
   }
 
-  addNewUser(user: User){
-    this.userCollection.add(user);
+  addNewUser(idUser: string, user: User){
+    this.id = idUser;
+    this.userCollection.doc(idUser).set(user);
   }
 
   getAllUsers():Observable<User[]>{
@@ -34,13 +36,9 @@ export class DataProviderService {
     this.userDocument = this.firestone.doc<User>(`users/${idUser}`);
     this.user = this.userDocument.snapshotChanges().pipe(
       map(action => {
-        if(action.payload.exists === false){
-          return null;
-        }else{
           const data = action.payload.data() as User;
           data.id = action.payload.id;
-          return data;
-        }
+          return  data ;
       })
     );
     return this.user;

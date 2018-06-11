@@ -1,7 +1,5 @@
 export interface Game {
-    id: string;
-    userId : string;
-    timeStamp: Date;
+    timeStamp: string;
     maxTime: number;
     numTries: number;
     successPercent: number;

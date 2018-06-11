@@ -69,14 +69,13 @@ export class AuthService{
         idAux[i] = parseInt(idAux[i]) + 1;
         idAux[i].toString();
         lastId = idAux.join('');
-        console.log(lastId);
         break;
       }
     }
   }
   this.user.id = lastId;
   this.user.email = email;
-  this.dataProviderService.addNewUser(this.user);
+  this.dataProviderService.addNewUser(this.user.id, this.user);
   this.userRegistered = true;
  }
 

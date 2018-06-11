@@ -28,7 +28,6 @@ export class RegisterComponent implements OnInit {
       {cssClass: 'alert-success', timeout: 3500});
       this.router.navigate(['/chart']);
     }).catch ( (err) => {
-      console.log(err);
       this.flashMessage.show(err.message,
       {cssClass: 'alert-danger', timeout: 3500});
       this.router.navigate(['/register']);
