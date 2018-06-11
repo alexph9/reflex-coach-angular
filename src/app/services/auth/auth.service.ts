@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { map } from "rxjs/operators";
 import { User } from '../../models/user';
 import { Observable } from 'rxjs';
-import { JsonPipe } from '@angular/common';
 
 
 @Injectable({
@@ -17,7 +16,6 @@ export class AuthService{
   user : User = {
     id: '',
     email: '',
-    games: [],
   }
 
   users: User[];

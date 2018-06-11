@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { DataProviderService } from '../../services/data-provider/data-provider.service';
+import { User } from '../../models/user';
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -7,9 +10,9 @@ import { Chart } from 'chart.js';
 })
 export class ChartComponent implements OnInit{
   chart: any;
-  constructor() { }
+  constructor(public dpService: DataProviderService) { }
   ngOnInit() {
-    //this.generateChart("line");
+  
   }
 setChart(chartType: any){
   this.generateChart(chartType);

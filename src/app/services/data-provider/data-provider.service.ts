@@ -1,55 +1,57 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import { User } from '../../models/user';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+
 
 @Injectable()
 
 export class DataProviderService {
-  userCollection: AngularFirestoreCollection<User>;
-  userDocument: AngularFirestoreDocument<User>;
   users: Observable<User[]>;
   user: Observable<User>;
   public id: string;
+  usersRef: AngularFireList<User>
+  userRef: AngularFireObject<User>
 
-  constructor(private firestone: AngularFirestore) {
-    this.userCollection = this.firestone.collection<User>('users');
+  constructor(private db: AngularFireDatabase) {
+    this.usersRef = db.list<User>('users');
+    this.users = db.list<User>('users').valueChanges();
   }
 
   addNewUser(idUser: string, user: User){
     this.id = idUser;
-    this.userCollection.doc(idUser).set(user);
+    this.usersRef.set(idUser, user);
   }
 
   getAllUsers():Observable<User[]>{
-    return this.users = this.userCollection.snapshotChanges().pipe(
+    return this.users = this.usersRef.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as User;
-        const id = a.payload.doc.id;
+        const data = a.payload.val() as User;
+        const id = a.key;
         return { id, ...data };
       }))
     );
   }
 
   getOneUser(idUser: string){
-    this.userDocument = this.firestone.doc<User>(`users/${idUser}`);
-    this.user = this.userDocument.snapshotChanges().pipe(
+    this.userRef = this.db.object<User>(`users/${idUser}`);
+    this.user = this.userRef.snapshotChanges().pipe(
       map(action => {
-          const data = action.payload.data() as User;
-          data.id = action.payload.id;
+          const data = action.payload.val() as User;
+          data.id = action.key;
           return  data ;
       })
     );
     return this.user;
   }
   updateUser(user: User){
-    this.userDocument = this.firestone.doc(`users/${user.id}`);
-    this.userDocument.update(user);
+    this.userRef = this.db.object(`users/${user.id}`);
+    this.userRef.update(user);
   }
   deleteUser(user: User){
-    this.userDocument = this.firestone.doc(`users/${user.id}`);
-    this.userDocument.delete();
+    this.userRef = this.db.object(`users/${user.id}`);
+    this.userRef.remove();
   }
 }
 
