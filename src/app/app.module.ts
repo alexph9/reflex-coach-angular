@@ -16,10 +16,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 //Services
 import { AuthGuard } from './guards/auth.guard';
-import { GameService } from './services/game/game.service';
-import { UserService } from './services/user/user.service';
-import { TryService } from './services/try/try.service';
 import { AuthService } from './services/auth/auth.service';
+import { DataProviderService } from './services/data-provider/data-provider.service';
 
 // Firebase
 import{ AngularFireModule } from 'angularfire2';
@@ -27,6 +25,7 @@ import{ AngularFireAuthModule } from 'angularfire2/auth';
 import{ AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment} from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+
 
 
 
@@ -52,7 +51,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     FlashMessagesModule,
     
   ],
-  providers: [AuthService, AuthGuard, FlashMessagesService, GameService, UserService, TryService],
+  providers: [AuthService, AuthGuard, FlashMessagesService, DataProviderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

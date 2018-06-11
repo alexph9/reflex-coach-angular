@@ -6,7 +6,7 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 
-export class UserService {
+export class DataProviderService {
   userCollection: AngularFirestoreCollection<User>;
   userDocument: AngularFirestoreDocument<User>;
   users: Observable<User[]>;

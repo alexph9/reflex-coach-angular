@@ -1,12 +1,13 @@
+import { DataProviderService } from './../data-provider/data-provider.service';
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { map } from "rxjs/operators";
-import { UserService } from '../user/user.service';
 import { User } from '../../models/user';
 import { Observable } from 'rxjs';
 import { JsonPipe } from '@angular/common';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AuthService{
   user : User = {
     id: '',
     email: '',
+    games: [],
   }
 
   users: User[];
@@ -25,7 +27,7 @@ export class AuthService{
   constructor( 
     public afAuth: AngularFireAuth, 
     private router: Router,
-    private userService: UserService,
+    private dataProviderService: DataProviderService,
   ) {}
 
   
@@ -41,7 +43,7 @@ export class AuthService{
   }
 
   registerUserDB(email){
-    this.userService.getAllUsers().subscribe(users => {
+    this.dataProviderService.getAllUsers().subscribe(users => {
       this.users = users;
       let maxId : string = '00000';
       for(var i = 0; i < this.users.length - 1; i++){
@@ -74,7 +76,7 @@ export class AuthService{
   }
   this.user.id = lastId;
   this.user.email = email;
-  this.userService.addNewUser(this.user);
+  this.dataProviderService.addNewUser(this.user);
   this.userRegistered = true;
  }
 
