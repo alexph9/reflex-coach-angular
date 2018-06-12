@@ -4,21 +4,21 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { map } from "rxjs/operators";
-import { User } from '../../models/user';
 import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService{
 
-  user : User = {
+  user = {
     id: '',
     email: '',
+    games: [{}],
   }
 
-  users: User[];
+  
+  users: any[];
   newId: string;
   userRegistered: boolean = false;
 
@@ -44,11 +44,9 @@ export class AuthService{
     this.dataProviderService.getAllUsers().subscribe(users => {
       this.users = users;
       let maxId : string = '00000';
-      for(var i = 0; i < this.users.length - 1; i++){
-        if(parseInt(maxId) < parseInt(this.users[i].id) ){
-          maxId = this.users[i].id;
-        }
-      }
+      this.users.forEach(user => {
+        maxId = (parseInt(maxId) < parseInt(user.id)) ? user.id : maxId;
+      })
       if(!this.userRegistered){
         this.obtainNewId(maxId, email);
       }

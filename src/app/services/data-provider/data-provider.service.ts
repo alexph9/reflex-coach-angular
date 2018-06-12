@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../models/user';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
@@ -8,26 +7,26 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angular
 @Injectable()
 
 export class DataProviderService {
-  users: Observable<User[]>;
-  user: Observable<User>;
+  users: Observable<any[]>;
+  user: Observable<any>;
   public id: string;
-  usersRef: AngularFireList<User>
-  userRef: AngularFireObject<User>
+  usersRef: AngularFireList<any>
+  userRef: AngularFireObject<any>
 
   constructor(private db: AngularFireDatabase) {
-    this.usersRef = db.list<User>('users');
-    this.users = db.list<User>('users').valueChanges();
+    this.usersRef = db.list('users');
+    this.users = db.list('users').valueChanges();
   }
 
-  addNewUser(idUser: string, user: User){
+  addNewUser(idUser: string, user: any){
     this.id = idUser;
     this.usersRef.set(idUser, user);
   }
 
-  getAllUsers():Observable<User[]>{
+  getAllUsers():Observable<any[]>{
     return this.users = this.usersRef.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.val() as User;
+        const data = a.payload.val();
         const id = a.key;
         return { id, ...data };
       }))
@@ -35,21 +34,21 @@ export class DataProviderService {
   }
 
   getOneUser(idUser: string){
-    this.userRef = this.db.object<User>(`users/${idUser}`);
+    this.userRef = this.db.object(`users/${idUser}`);
     this.user = this.userRef.snapshotChanges().pipe(
       map(action => {
-          const data = action.payload.val() as User;
+          const data = action.payload.val();
           data.id = action.key;
           return  data ;
       })
     );
     return this.user;
   }
-  updateUser(user: User){
+  updateUser(user: any){
     this.userRef = this.db.object(`users/${user.id}`);
     this.userRef.update(user);
   }
-  deleteUser(user: User){
+  deleteUser(user: any){
     this.userRef = this.db.object(`users/${user.id}`);
     this.userRef.remove();
   }
