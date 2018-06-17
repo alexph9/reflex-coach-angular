@@ -43,37 +43,20 @@ export class AuthService{
   registerUserDB(email){
     this.dataProviderService.getAllUsers().subscribe(users => {
       this.users = users;
-      let maxId : string = '00000';
+      let maxId : string = '0';
+      let newId: number;
       this.users.forEach(user => {
         maxId = (parseInt(maxId) < parseInt(user.id)) ? user.id : maxId;
       })
       if(!this.userRegistered){
-        this.obtainNewId(maxId, email);
+        newId = parseInt(maxId) + 1;
+        this.user.id = newId.toString();
+        this.user.email = email;
+        this.dataProviderService.addNewUser(this.user.id, this.user);
+        this.userRegistered = true;
       }
     });
-    this.userRegistered = false;
   }
-
- obtainNewId(lastId, email){
-  this.user.id = "55555";
-  let idAux : any = lastId.split("");
-  if(!this.userRegistered){
-    for(var i = lastId.length - 1 ; i >= 0; i-- ){
-      if(idAux[i] === '4'){
-        idAux[i] = '0';
-      } else {
-        idAux[i] = parseInt(idAux[i]) + 1;
-        idAux[i].toString();
-        lastId = idAux.join('');
-        break;
-      }
-    }
-  }
-  this.user.id = lastId;
-  this.user.email = email;
-  this.dataProviderService.addNewUser(this.user.id, this.user);
-  this.userRegistered = true;
- }
 
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {
@@ -91,6 +74,7 @@ export class AuthService{
 
   logout() {
     this.router.navigate(['/']);
+    this.userRegistered = false;
     return this.afAuth.auth.signOut();
   }
 

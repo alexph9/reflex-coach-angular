@@ -50,6 +50,7 @@ export class DataProviderService {
     this.userRef = this.db.object(`users/${user.id}`);
     this.userRef.update(user);
   }
+  
   deleteUser(user: any) {
     this.userRef = this.db.object(`users/${user.id}`);
     this.userRef.remove();
