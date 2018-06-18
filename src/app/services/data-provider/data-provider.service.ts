@@ -56,24 +56,6 @@ export class DataProviderService {
     this.userRef.remove();
   }
 
-  /*getUserId(email) {
-    this.email$ = new BehaviorSubject(null);
-    this.users$ = this.email$.pipe(
-      switchMap(userEmail =>
-        this.db.list('/users', ref =>
-          userEmail ? ref.orderByChild('email').equalTo(email) : ref
-        ).snapshotChanges()
-      )
-    );
-
-    this.email$.next(email);
-  }*/
-
-  filterUserByEmail(email: string|null) {
-    console.log(this.db.list('/users', ref => ref.orderByChild('email').equalTo(email)))
-    return this.db.list('/users', ref => ref.orderByChild('email').equalTo(email)) ;
-  }
-
 }
 
 

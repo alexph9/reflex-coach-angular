@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     .then( (res) => {
       this.flashMessage.show('The user was created succesfully',
       {cssClass: 'alert-success', timeout: 3500});
-      this.router.navigate(['/chart']);
+      this.router.navigate(['/games']);
     }).catch ( (err) => {
       this.flashMessage.show(err.message,
       {cssClass: 'alert-danger', timeout: 3500});

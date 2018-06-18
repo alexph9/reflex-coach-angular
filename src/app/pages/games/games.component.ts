@@ -7,11 +7,11 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css']
+  selector: 'app-games',
+  templateUrl: './games.component.html',
+  styleUrls: ['./games.component.css']
 })
-export class ChartComponent implements OnInit {
+export class GamesComponent implements OnInit {
   chart: any;
   email: string;
   userLogged: any;
@@ -26,7 +26,7 @@ export class ChartComponent implements OnInit {
       console.log("Email", this.email);
     })
 
-    this.userLogged = this.dpService.filterUserByEmail(this.email).valueChanges();
+    // this.userLogged = this.dpService.filterUserByEmail(this.email).valueChanges();
     console.log("Usuario", this.userLogged);
   }
 

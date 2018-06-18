@@ -10,8 +10,8 @@ import { NavBarComponent } from './pages/common/nav-bar/nav-bar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
-import { ChartComponent } from './pages/chart/chart.component';
-import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { GamesComponent } from './pages/games/games.component';
+import { HistoricalComponent } from './pages/historical/historical.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 //Services
@@ -36,8 +36,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    ChartComponent,
-    UserProfileComponent,
+    GamesComponent,
+    HistoricalComponent,
     NotFoundComponent
   ],
   imports: [

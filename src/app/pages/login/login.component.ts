@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       .then((res) => {
         this.flashMessage.show('The user was logged in succesfully',
         {cssClass: 'alert-success', timeout: 2500});
-        this.router.navigate(['/chart']);
+        this.router.navigate(['/games']);
       }).catch ( (err) => {
         this.flashMessage.show(err.message,
         {cssClass: 'alert-danger', timeout: 2500});
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       .then((res) => {
         this.flashMessage.show('The user was logged in succesfully',
         {cssClass: 'alert-success', timeout: 3500});
-        this.router.navigate(['/chart']);
+        this.router.navigate(['/games']);
       }).catch ( (err) => {
         this.flashMessage.show(err.message,
         {cssClass: 'alert-danger', timeout: 3500});
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       .then((res) => {
         this.flashMessage.show('The user was logged in succesfully',
         {cssClass: 'alert-success', timeout: 3500});
-        this.router.navigate(['/chart']);
+        this.router.navigate(['/games']);
       }).catch ( (err) => {
         this.flashMessage.show(err.message,
         {cssClass: 'alert-danger', timeout: 3500});
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
     .then( (res) => {
       this.flashMessage.show('The user was logged in succesfully',
       {cssClass: 'alert-success', timeout: 3500});
-      this.router.navigate(['/chart']);
+      this.router.navigate(['/games']);
     }).catch ( (err) => {
       this.flashMessage.show(err.message,
       {cssClass: 'alert-danger', timeout: 3500});
