@@ -21,16 +21,38 @@ export class GamesComponent implements OnInit {
     public authService: AuthService,
     public db: AngularFireDatabase,
   ) {
-    this.authService.getAuth().subscribe(user => {
-      this.email = user.email;
-      console.log("Email", this.email);
-    })
+    /*this.authService.getAuth().subscribe(user => {
+      this.userLogged = this.db.list('users', ref => ref.equalTo(user.)).snapshotChanges();
+    })*/
+    
+
+    this.dpService.getAllUsers().subscribe(users => users.forEach(user => {
+      if (user.id.email === this.email) {
+        this.userLogged = user;
+      }
+    }))
 
     // this.userLogged = this.dpService.filterUserByEmail(this.email).valueChanges();
-    console.log("Usuario", this.userLogged);
+    
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.userLogged);
+    this.getEmail();
+    
+  }
+
+  getEmail(){
+    this.authService.getAuth().subscribe(
+      user => {
+        this.email = user.email;
+      },
+      error => {
+
+      })
+    console.log("Usuario", this.userLogged);
+    console.log("Email", this.email);
+  }
 
   setChart(chartType: any) {
     this.generateChart(chartType);
