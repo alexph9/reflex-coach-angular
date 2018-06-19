@@ -13,45 +13,24 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 })
 export class GamesComponent implements OnInit {
   chart: any;
-  email: string;
   userLogged: any;
+  isUserLogged: boolean = false;
+  userUid: string;
 
   constructor(
     public dpService: DataProviderService,
     public authService: AuthService,
     public db: AngularFireDatabase,
   ) {
-    /*this.authService.getAuth().subscribe(user => {
-      this.userLogged = this.db.list('users', ref => ref.equalTo(user.)).snapshotChanges();
-    })*/
-    
 
-    this.dpService.getAllUsers().subscribe(users => users.forEach(user => {
-      if (user.id.email === this.email) {
-        this.userLogged = user;
-      }
-    }))
-
-    // this.userLogged = this.dpService.filterUserByEmail(this.email).valueChanges();
-    
+     this.authService.getAuth().subscribe(user =>{
+      this.userUid = user.uid;
+      this.isUserLogged = true;
+    })
   }
 
   ngOnInit() {
-    console.log(this.userLogged);
-    this.getEmail();
-    
-  }
-
-  getEmail(){
-    this.authService.getAuth().subscribe(
-      user => {
-        this.email = user.email;
-      },
-      error => {
-
-      })
-    console.log("Usuario", this.userLogged);
-    console.log("Email", this.email);
+    this.dpService.getOneUser(this.userUid).subscribe(user => this.userLogged = user)
   }
 
   setChart(chartType: any) {
@@ -74,5 +53,6 @@ export class GamesComponent implements OnInit {
         responsive: true
       }
     });
+    console.log(this.userLogged);
   }
 }

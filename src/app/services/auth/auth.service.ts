@@ -19,8 +19,6 @@ export class AuthService{
 
   
   users: any[];
-  newId: string;
-  userRegistered: boolean = false;
 
   constructor( 
     public afAuth: AngularFireAuth, 
@@ -34,27 +32,8 @@ export class AuthService{
       this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then( (userData) => {
         resolve(userData);
-        this.registerUserDB(email)
       },
       err => reject(err));
-    });
-  }
-
-  registerUserDB(email){
-    this.dataProviderService.getAllUsers().subscribe(users => {
-      this.users = users;
-      let maxId : string = '0';
-      let newId: number;
-      this.users.forEach(user => {
-        maxId = (parseInt(maxId) < parseInt(user.id)) ? user.id : maxId;
-      })
-      if(!this.userRegistered){
-        newId = parseInt(maxId) + 1;
-        this.user.id = newId.toString();
-        this.user.email = email;
-        this.dataProviderService.addNewUser(this.user.id, this.user);
-        this.userRegistered = true;
-      }
     });
   }
 
@@ -74,7 +53,6 @@ export class AuthService{
 
   logout() {
     this.router.navigate(['/']);
-    this.userRegistered = false;
     return this.afAuth.auth.signOut();
   }
 

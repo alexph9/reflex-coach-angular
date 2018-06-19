@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, switchMap } from "rxjs/operators";
-import { AngularFireDatabase, AngularFireList, AngularFireObject, AngularFireAction } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 
 
 @Injectable()
@@ -12,13 +12,10 @@ export class DataProviderService {
   public id: string;
   usersRef: AngularFireList<any>;
   userRef: AngularFireObject<any>;
-  userLogged: Observable<any>;
-  email$: BehaviorSubject<string | null>
 
   constructor(private db: AngularFireDatabase) {
     this.usersRef = db.list('users');
     this.users = db.list('users').valueChanges();
-    //this.userLogged = db.
   }
 
   addNewUser(idUser: string, user: any) {
@@ -57,13 +54,6 @@ export class DataProviderService {
     this.userRef = this.db.object(`users/${user.id}`);
     this.userRef.remove();
   }
-
-  /*getUserLogged(email) {
-    return this.userLogged = this.email$.pipe(
-      switchMap(userEmail => this.db.list('/users', ref => ref.equalTo(userEmail)).snapshotChanges()
-      )
-    );
-  }*/
 
 }
 
