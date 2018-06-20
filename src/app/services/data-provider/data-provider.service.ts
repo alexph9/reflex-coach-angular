@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, switchMap } from "rxjs/operators";
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { AuthService } from '../auth/auth.service';
 
 
 @Injectable()
@@ -13,7 +14,9 @@ export class DataProviderService {
   usersRef: AngularFireList<any>;
   userRef: AngularFireObject<any>;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(
+    private db: AngularFireDatabase,
+  ) {
     this.usersRef = db.list('users');
     this.users = db.list('users').valueChanges();
   }

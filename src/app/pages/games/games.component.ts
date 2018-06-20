@@ -15,7 +15,10 @@ export class GamesComponent implements OnInit {
   chart: any;
   userLogged: any;
   userUid: string;
-  games: any;
+  games: Array<string> = [];
+  dates: Array<string> = [];
+  dateSelectionated: string;
+  actualChart: string = 'bar';
 
   constructor(
     public dpService: DataProviderService,
@@ -23,40 +26,128 @@ export class GamesComponent implements OnInit {
     public db: AngularFireDatabase,
   ) {
     this.authService.isUserLogged = false;
-    if(!this.authService.isUserLogged){
-      this.authService.getAuth().subscribe(user =>{
+    if (!this.authService.isUserLogged) {
+      this.authService.getAuth().subscribe(user => {
         this.userUid = user.uid || '';
       })
-      this.games = [1,2,3,4,5,6,7,8,9,10];
-    } 
+    }
   }
 
   ngOnInit() {
-    this.dpService.getOneUser(this.userUid).subscribe(user => this.userLogged = user)
+    this.dpService.getOneUser(this.userUid).subscribe(user => {
+      this.userLogged = user;
+      this.getUserGames();
+      this.dateSelectionated = this.games[0];
+    });
+  }
+
+  getUserGames() {
+    var cont = -1;
+    console.log(this.userLogged)
+    for (let j in this.userLogged.games) {
+      cont++;
+      this.games[cont] = j;
+    }
+    for (let i = 0; i < this.games.length; i++) {
+      var date = new Date(0);
+      let seconds = parseInt(this.games[i]);
+      date.setUTCSeconds(seconds);
+      this.dates[i] = date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
+    }
+  }
+
+  onClickSaveDate(id) {
+    this.dateSelectionated = this.games[id];
+    switch (this.actualChart) {
+      case 'bar':
+        this.timePerButtonChart();
+        break;
+      case 'line':
+      this.timePerAttemptChart();
+        break;
+      case 'pie':
+      this.hitsVsFailuresChart();
+        break;
+      default:
+      this.timePerButtonChart();
+    }
   }
 
   timePerButtonChart() {
+    this.actualChart = 'bar';
     let data = ["BUZZ 0", "BUZZ 1", "BUZZ 2", "BUZZ 3"];
-    let datasets = [200, 500, 355, 60];//TODO: recoger media tiempo tardado por boton
-    this.createChart('bar', data, datasets, 'Time per button')
-    console.log("User", this.userLogged.games);
+    let datasets = this.getTimePerButtonDataset();
+    this.createChart(this.actualChart, data, datasets, 'Time per button');
+
+  }
+
+  getTimePerButtonDataset() {
+    let particularGame = this.userLogged.games[this.dateSelectionated];
+    let timePerBuzz: Array<number> = [0, 0, 0, 0];
+    let contTries: Array<number> = [0, 0, 0, 0];
+    let buzz
+    for (let i = 0; i < particularGame.numTries; i++) {
+      buzz = particularGame.tries[i].buzz;
+      contTries[buzz] += 1;
+      timePerBuzz[buzz] += particularGame.tries[i].delay;
+    }
+    for (let i = 0; i < timePerBuzz.length; i++) {
+      timePerBuzz[i] = timePerBuzz[i] / contTries[i];
+    }
+    return timePerBuzz;
   }
 
   timePerAttemptChart() {
-    let data = ["1", "2", "3", "4", "5","6", "7", "8", "9", "10","11", "12", "13", "14", "15","16", "17", "18", "19", "20"]; //TODO: Array segun num intentos;
-    let datasets = [200, 500, 355, 600, 333, 454, 747, 1000, 244, 242, 121, 255, 747, 557, 333, 744, 644, 500, 997, 854];//TODO: Array delay de cada intento
-    this.createChart('line', data, datasets, 'Time per attempt')
-    console.log("User", this.userLogged.games);
+    this.actualChart = 'line';
+    let data = this.timePerAttemptData();
+    let datasets = this.timePerAttemptDataset();
+    this.createChart(this.actualChart, data, datasets, 'Time per attempt')
   }
+
+  timePerAttemptData(){
+    let particularGame = this.userLogged.games[this.dateSelectionated];
+    let idTry: number;
+    let numAttempt : Array<string> = [];
+    for (let i = 0; i < particularGame.numTries; i++) {
+      idTry = i+1;
+      numAttempt[i] = idTry.toString();
+    }
+    return numAttempt;
+  }
+
+  timePerAttemptDataset(){
+    let particularGame = this.userLogged.games[this.dateSelectionated];
+    let delayAttempt : Array<number> = [];
+    for (let i = 0; i < particularGame.numTries; i++) {
+      delayAttempt[i] = particularGame.tries[i].delay
+    }
+    return delayAttempt;
+  }
+
 
   hitsVsFailuresChart() {
+    this.actualChart = 'pie'
     let data = ["Hits", "Failures"];
-    let datasets = [60, 40 ];//TODO: recoger successPercent para exito y 100-successPercent para failure
-    this.createChart('pie', data, datasets, 'Hits vs Failures')
-    console.log("User", this.userLogged.games);
+    let datasets = this.hitsVsFailuresDataset();
+    this.createChart(this.actualChart, data, datasets, 'Hits vs Failures')
   }
 
-  createChart(type, data, datasets, name){
+  hitsVsFailuresDataset(){
+    let particularGame = this.userLogged.games[this.dateSelectionated];
+    let successPercent: Array<number> = [0,0];
+    let contSuccess: number = 0;
+    for (let i = 0; i < particularGame.numTries; i++) {
+      if(particularGame.tries[i].delay < particularGame.maxTime){
+        contSuccess++;
+      }
+    }
+    successPercent[0] = (contSuccess*100) / particularGame.numTries;
+    successPercent[1] = 100 - successPercent[0];
+    return successPercent;
+
+  }
+
+  createChart(type, data, datasets, name) {
     if (this.chart !== undefined) {
       this.chart.destroy();
     }
@@ -79,7 +170,7 @@ export class GamesComponent implements OnInit {
             bottom: 0
           },
         }
-        
+
       }
     });
   }
