@@ -1,17 +1,28 @@
-<div class="row mt-5">
-  <div class="col-2">
-      <ul class="list-group">
-          <li class="list-group-item" (click)="setChart('line')">Line</li>
-          <li class="list-group-item" (click)="setChart('bar')">Bar</li>
-          <li class="list-group-item" (click)="setChart('radar')">Radar</li>
-          <li class="list-group-item" (click)="setChart('pie')">Pie</li>
-          <li class="list-group-item" (click)="setChart('doughnut')">Doughnut</li>
-          <li class="list-group-item" (click)="setChart('polarArea')">Polar Area</li>
-        </ul>
-  </div>
-  <div class="col-10">
-    <div>
-      <canvas id="canvas">{{ chart }}</canvas>
+<div class="games_container">
+    <div class="games_list">
+            <h2>Games list</h2>
+            <mat-nav-list>
+                <a mat-list-item *ngFor="let game of games"> {{ game }} </a>
+            </mat-nav-list>
     </div>
-  </div>
+
+    <div class="charts">
+        <canvas id="canvas">{{ chart }}</canvas>
+    </div>
+    
+    
+    <div class="btns_container">
+        <button mat-raised-button class="btn_sunflower" (click)="timePerButtonChart()">
+          Time per button <i class="material-icons">insert_chart_outlined</i>
+        </button>
+        <button mat-raised-button class="btn_blue" (click)="timePerAttemptChart()">
+            Time per attempt <i class="material-icons"> show_chart</i>
+          </button>
+          <button mat-raised-button class="btn_green" (click)="hitsVsFailuresChart()">
+              Hits vs Failures <i class="material-icons">pie_chart</i>
+          </button>
+    </div>
 </div>
+
+
+      

@@ -3,6 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 //Components
 import { AppComponent } from './app.component';
@@ -25,6 +32,7 @@ import{ AngularFireAuthModule } from 'angularfire2/auth';
 import{ AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment} from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { FooterComponent } from './pages/common/footer/footer.component';
 
 
 
@@ -38,7 +46,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     LoginComponent,
     GamesComponent,
     HistoricalComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +58,12 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     AngularFireAuthModule,
     FormsModule,
     FlashMessagesModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatGridListModule
     
   ],
   providers: [AuthService, AuthGuard, FlashMessagesService, DataProviderService],

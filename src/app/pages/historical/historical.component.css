@@ -1,0 +1,52 @@
+.historical_container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 110px);
+    width: 100%;
+    padding: 1em;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.charts {
+    flex: 1;
+    position: relative;
+}
+
+
+.btns_container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+
+.mat-raised-button {
+    flex: 1;
+    width: 100%;
+    padding: 1em;
+    font-size: 2em;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.material-icons {
+    padding-left:5px;
+    font-size: 2em;
+}
+
+.btn_sunflower {
+    background: #f1c40f;
+}
+
+.btn_blue {
+    background: #3498db;
+}
+
+.btn_green {
+    background: #2ecc71;
+}

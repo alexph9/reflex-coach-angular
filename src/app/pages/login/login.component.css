@@ -13,3 +13,29 @@
     background: #55acee;
     color: #fff;
 }
+
+
+.app-login {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px); 
+    background: #7f8c8d;
+}
+
+.reflex-centro {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    height: 100%;
+    margin-top: -50px;
+}
+
+@media (max-width: 768px) {
+    .app-login {
+        padding: 2em;
+    }
+}

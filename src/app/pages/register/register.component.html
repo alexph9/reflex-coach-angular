@@ -1,20 +1,26 @@
-<div class="row">
-    <div class="col-md-6 mx-auto mt-5">
-      <div class="card">
-        <div class="card-body">
-          <h1 class="text-center">REGISTER</h1>
-          <form (submit)="onSubmitAddUser()" >
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" name="email" id="email" [(ngModel)]= "email" class="form-control">
+<div class="app-register">
+    <div class="reflex-centro">
+        <div class="row">
+            <div class="col-md-6 mx-auto mt-5">
+              <div class="card">
+                <div class="card-body">
+                  <h1 class="text-center">REGISTER</h1>
+                  <form (submit)="onSubmitAddUser()" >
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" name="email" id="email" [(ngModel)]= "email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" [(ngModel)]= "password" class="form-control">
+                    </div>
+                    <input type="submit" value="Send" class="btn btn-primary btn-block btn-lg">
+                  </form>
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" [(ngModel)]= "password" class="form-control">
-            </div>
-            <input type="submit" value="Send" class="btn btn-primary btn-block btn-lg">
-          </form>
-        </div>
-      </div>
+          </div>
     </div>
-  </div>
+   
+</div>
+

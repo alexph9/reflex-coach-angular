@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span class="logo"><a href="#">Reflex Coach</a></span>
+      <div class="example-fill-remaining-space botones">
+          <ul class="main_btns">
+              <li routerLinkActive="active" *ngIf ="isLogin">
+                <a routerLink="/games">Games</a>
+              </li>
+              <li routerLinkActive="active" *ngIf ="isLogin">
+                <a routerLink="/historical">Historical</a>
+              </li>
+              <li routerLinkActive="active" *ngIf ="!isLogin">
+                <a routerLink="/login">Login <span class="sr-only">(current)</span></a>
+              </li>
+              <li routerLinkActive="active" *ngIf ="!isLogin">
+                <a  routerLink="/register">Register</a>
+              </li>
+              <li *ngIf ="isLogin">
+                  <a (click) = "onClickLogout()" >Logout</a>
+              </li>
+            </ul>
+      </div>
+    
+    </mat-toolbar-row>
+  </mat-toolbar>

@@ -19,6 +19,7 @@ export class AuthService{
 
   
   users: any[];
+  public isUserLogged: boolean = false;
 
   constructor( 
     public afAuth: AngularFireAuth, 
@@ -53,6 +54,7 @@ export class AuthService{
 
   logout() {
     this.router.navigate(['/']);
+    this.isUserLogged = true;
     return this.afAuth.auth.signOut();
   }
 

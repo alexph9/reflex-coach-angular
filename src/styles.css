@@ -1,4 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .alert.flash-message{
     margin-top: 10px;
 }
+
+html, *:after, *:before {
+    box-sizing: border-box;
+    display: block;
+    height: 100%;
+  }
+
+  body {
+    box-sizing: inherit;
+    overflow-x: hidden;
+    display: block;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 0px;
+}
+
+li {
+    list-style-type: none;
+    padding-right: 2em;
+}
+
+li:last-child {
+    padding-right: 0px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+}
+
+.text-center {
+    font-weight: bold;
+}
+
+
+

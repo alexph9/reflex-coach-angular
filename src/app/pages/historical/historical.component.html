@@ -1,3 +1,21 @@
-<p>
-  historical works!
-</p>
+<div class="historical_container">
+  <div class="charts">
+    <canvas id="canvas">{{ chart }}</canvas>
+  </div>
+
+
+  <div class="btns_container">
+    <button mat-raised-button class="btn_sunflower" (click)="timePerButtonChart()">
+      Time per button
+      <i class="material-icons">insert_chart_outlined</i>
+    </button>
+    <button mat-raised-button class="btn_blue" (click)="timePerAttemptChart()">
+      Time per attempt
+      <i class="material-icons"> show_chart</i>
+    </button>
+    <button mat-raised-button class="btn_green" (click)="hitsVsFailuresChart()">
+      Hits vs Failures
+      <i class="material-icons">pie_chart</i>
+    </button>
+  </div>
+</div>

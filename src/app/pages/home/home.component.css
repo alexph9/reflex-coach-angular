@@ -1,0 +1,19 @@
+.app-home {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+    background: url("../../../assets/background.jpg") no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.main-title {
+    background: white;
+    padding: 4em;
+    border-radius: 10px;
+    font-family: monospace;
+    letter-spacing: 0px;
+}
