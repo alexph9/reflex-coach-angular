@@ -28,9 +28,6 @@
     color: #ffaf40;
 }
 
-
-
-
 .charts {
     flex: 1;
     position: relative;
@@ -83,15 +80,3 @@ h2{
     font-size: 1,5em;
     color: #636e72;
 }
-
-/* .btn_sunflower {
-    background: #f1c40f;
-}
-
-.btn_blue {
-    background: #3498db;
-}
-
-.btn_green {
-    background: #2ecc71;
-} */
