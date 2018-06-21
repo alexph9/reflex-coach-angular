@@ -63,13 +63,13 @@ export class GamesComponent implements OnInit {
         this.timePerButtonChart();
         break;
       case 'line':
-      this.timePerAttemptChart();
+        this.timePerAttemptChart();
         break;
       case 'pie':
-      this.hitsVsFailuresChart();
+        this.hitsVsFailuresChart();
         break;
       default:
-      this.timePerButtonChart();
+        this.timePerButtonChart();
     }
   }
 
@@ -77,7 +77,45 @@ export class GamesComponent implements OnInit {
     this.actualChart = 'bar';
     let data = ["BUZZ 0", "BUZZ 1", "BUZZ 2", "BUZZ 3"];
     let datasets = this.getTimePerButtonDataset();
-    this.createChart(this.actualChart, data, datasets, 'Time per button');
+    if (this.chart !== undefined) {
+      this.chart.destroy();
+    }
+    this.chart = new Chart('canvas', {
+      type: this.actualChart,
+      data: {
+        labels: data,
+        datasets: [{
+          label: 'Time per button',
+          data: datasets,
+          backgroundColor: [
+            '#7bed9f',
+            '#ff6b81',
+            '#70a1ff',
+            '#eccc68',
+          ],
+          borderColor: [
+            '#2ed573',
+            '#ff4757',
+            '#1e90ff',
+            '#ffa502',
+          ],
+          borderWidth: 2,
+  
+        }]
+      },
+      options: {
+        responsive: true,
+        layout: {
+          padding: {
+            left: 30,
+            right: 30,
+            top: 0,
+            bottom: 0
+          },
+        }
+  
+      }
+    });
 
   }
 
@@ -101,23 +139,51 @@ export class GamesComponent implements OnInit {
     this.actualChart = 'line';
     let data = this.timePerAttemptData();
     let datasets = this.timePerAttemptDataset();
-    this.createChart(this.actualChart, data, datasets, 'Time per attempt')
+    if (this.chart !== undefined) {
+      this.chart.destroy();
+    }
+    this.chart = new Chart('canvas', {
+      type: this.actualChart,
+      data: {
+        labels: data,
+        datasets: [{
+          label: 'Time per attempt',
+          data: datasets,
+          backgroundColor: '#ffeaa7',
+          borderColor: '#ff4757',
+          borderWidth: 2,
+  
+        }]
+      },
+      options: {
+        responsive: true,
+        layout: {
+          padding: {
+            left: 30,
+            right: 30,
+            top: 0,
+            bottom: 0
+          },
+        }
+  
+      }
+    });
   }
 
-  timePerAttemptData(){
+  timePerAttemptData() {
     let particularGame = this.userLogged.games[this.dateSelectionated];
     let idTry: number;
-    let numAttempt : Array<string> = [];
+    let numAttempt: Array<string> = [];
     for (let i = 0; i < particularGame.numTries; i++) {
-      idTry = i+1;
+      idTry = i + 1;
       numAttempt[i] = idTry.toString();
     }
     return numAttempt;
   }
 
-  timePerAttemptDataset(){
+  timePerAttemptDataset() {
     let particularGame = this.userLogged.games[this.dateSelectionated];
-    let delayAttempt : Array<number> = [];
+    let delayAttempt: Array<number> = [];
     for (let i = 0; i < particularGame.numTries; i++) {
       delayAttempt[i] = particularGame.tries[i].delay
     }
@@ -129,35 +195,20 @@ export class GamesComponent implements OnInit {
     this.actualChart = 'pie'
     let data = ["Hits", "Failures"];
     let datasets = this.hitsVsFailuresDataset();
-    this.createChart(this.actualChart, data, datasets, 'Hits vs Failures')
-  }
-
-  hitsVsFailuresDataset(){
-    let particularGame = this.userLogged.games[this.dateSelectionated];
-    let successPercent: Array<number> = [0,0];
-    let contSuccess: number = 0;
-    for (let i = 0; i < particularGame.numTries; i++) {
-      if(particularGame.tries[i].delay < particularGame.maxTime){
-        contSuccess++;
-      }
-    }
-    successPercent[0] = (contSuccess*100) / particularGame.numTries;
-    successPercent[1] = 100 - successPercent[0];
-    return successPercent;
-
-  }
-
-  createChart(type, data, datasets, name) {
     if (this.chart !== undefined) {
       this.chart.destroy();
     }
     this.chart = new Chart('canvas', {
-      type: type,
+      type: this.actualChart,
       data: {
         labels: data,
         datasets: [{
-          label: name,
+          label: 'Hits vs Failures',
           data: datasets,
+          backgroundColor: [
+            '#2ed573',
+            '#ff4757',
+          ],
         }]
       },
       options: {
@@ -173,5 +224,62 @@ export class GamesComponent implements OnInit {
 
       }
     });
+}
+
+hitsVsFailuresDataset() {
+  let particularGame = this.userLogged.games[this.dateSelectionated];
+  let successPercent: Array<number> = [0, 0];
+  let contSuccess: number = 0;
+  for (let i = 0; i < particularGame.numTries; i++) {
+    if (particularGame.tries[i].delay < particularGame.maxTime) {
+      contSuccess++;
+    }
   }
+  successPercent[0] = (contSuccess * 100) / particularGame.numTries;
+  successPercent[1] = 100 - successPercent[0];
+  return successPercent;
+
+}
+
+createChart(type, data, datasets, name) {
+  if (this.chart !== undefined) {
+    this.chart.destroy();
+  }
+  this.chart = new Chart('canvas', {
+    type: type,
+    data: {
+      labels: data,
+      datasets: [{
+        label: name,
+        data: datasets,
+        backgroundColor: [
+          '#7bed9f',
+          '#ff6b81',
+          '#70a1ff',
+          '#eccc68',
+        ],
+        borderColor: [
+          '#2ed573',
+          '#ff4757',
+          '#1e90ff',
+          '#ffa502',
+        ],
+        borderWidth: 2,
+
+      }]
+    },
+    options: {
+      responsive: true,
+      layout: {
+        padding: {
+          left: 30,
+          right: 30,
+          top: 0,
+          bottom: 0
+        },
+      }
+
+    }
+  });
+}
 }

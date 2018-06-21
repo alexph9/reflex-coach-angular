@@ -60,7 +60,45 @@ export class HistoricalComponent implements OnInit {
   timePerButtonChart() {
     let data = ["BUZZ 0", "BUZZ 1", "BUZZ 2", "BUZZ 3"];
     let datasets = this.getTimePerButtonDataset();
-    this.createChart('bar', data, datasets, 'Time per button');
+    if (this.chart !== undefined) {
+      this.chart.destroy();
+    }
+    this.chart = new Chart('canvas', {
+      type: 'bar',
+      data: {
+        labels: data,
+        datasets: [{
+          label: 'Time per button',
+          data: datasets,
+          backgroundColor: [
+            '#7bed9f',
+            '#ff6b81',
+            '#70a1ff',
+            '#eccc68',
+          ],
+          borderColor: [
+            '#2ed573',
+            '#ff4757',
+            '#1e90ff',
+            '#ffa502',
+          ],
+          borderWidth: 2,
+  
+        }]
+      },
+      options: {
+        responsive: true,
+        layout: {
+          padding: {
+            left: 30,
+            right: 30,
+            top: 0,
+            bottom: 0
+          },
+        }
+  
+      }
+    });
 
   }
 
@@ -84,7 +122,35 @@ export class HistoricalComponent implements OnInit {
   timePerAttemptChart() {
     let data = this.timePerAttemptData();
     let datasets = this.timePerAttemptDataset();
-    this.createChart('line', data, datasets, 'Time per attempt')
+    if (this.chart !== undefined) {
+      this.chart.destroy();
+    }
+    this.chart = new Chart('canvas', {
+      type: 'line',
+      data: {
+        labels: data,
+        datasets: [{
+          label: 'Time per attempt',
+          data: datasets,
+          backgroundColor: '#ffeaa7',
+          borderColor: '#ff4757',
+          borderWidth: 2,
+  
+        }]
+      },
+      options: {
+        responsive: true,
+        layout: {
+          padding: {
+            left: 30,
+            right: 30,
+            top: 0,
+            bottom: 0
+          },
+        }
+  
+      }
+    });
   }
 
   timePerAttemptData(){
@@ -112,7 +178,35 @@ export class HistoricalComponent implements OnInit {
   hitsVsFailuresChart() {
     let data = ["Hits", "Failures"];
     let datasets = this.hitsVsFailuresDataset();
-    this.createChart('pie', data, datasets, 'Hits vs Failures')
+    if (this.chart !== undefined) {
+      this.chart.destroy();
+    }
+    this.chart = new Chart('canvas', {
+      type: 'pie',
+      data: {
+        labels: data,
+        datasets: [{
+          label: 'Hits vs Failures',
+          data: datasets,
+          backgroundColor: [
+            '#2ed573',
+            '#ff4757',
+          ],
+        }]
+      },
+      options: {
+        responsive: true,
+        layout: {
+          padding: {
+            left: 30,
+            right: 30,
+            top: 0,
+            bottom: 0
+          },
+        }
+
+      }
+    });
   }
 
   hitsVsFailuresDataset(){

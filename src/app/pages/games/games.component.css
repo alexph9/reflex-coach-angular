@@ -17,11 +17,19 @@
 }
 
 .mat-nav-list a {
-    background: #84817a;
+    background: #636e72;
     margin-bottom: 5px;
     color: white;
     font-size: 1.3em;
+    transition: color .3s ease-in-out;
 }
+
+.mat-nav-list a:hover {
+    color: #ffaf40;
+}
+
+
+
 
 .charts {
     flex: 1;
@@ -45,6 +53,11 @@
     font-size: 2em;
     color: white;
     margin-bottom: 5px;
+    transition: color .3s ease-in-out;
+}
+
+.mat-raised-button:hover {
+    color: #ffaf40;
 }
 
 .material-icons {
@@ -53,9 +66,25 @@
 }
 
 
-
-
 .btn_sunflower {
+    background:  #636e72;
+}
+
+.btn_blue {
+    background:  #636e72;
+}
+
+.btn_green {
+    background: #636e72;
+}
+
+h2{
+    font-weight: bold;
+    font-size: 1,5em;
+    color: #636e72;
+}
+
+/* .btn_sunflower {
     background: #f1c40f;
 }
 
@@ -65,4 +94,4 @@
 
 .btn_green {
     background: #2ecc71;
-}
+} */
