@@ -28,9 +28,6 @@
     color: #ffaf40;
 }
 
-
-
-
 .charts {
     flex: 1;
     position: relative;
@@ -84,14 +81,33 @@ h2{
     color: #636e72;
 }
 
-/* .btn_sunflower {
-    background: #f1c40f;
-}
 
-.btn_blue {
-    background: #3498db;
-}
+@media (max-width: 600px) {
+    .btns_container {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        order: 1;
+        width: 100%;
+    }
 
-.btn_green {
-    background: #2ecc71;
-} */
+    .mat-raised-button {
+        flex: 1;
+        padding: 1em .5em;
+        font-size: 100%;
+        color: white;
+        transition: color .3s ease-in-out;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+
+    .material-icons {
+        display: none;
+    }
+    
+}

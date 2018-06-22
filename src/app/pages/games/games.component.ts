@@ -57,7 +57,6 @@ export class GamesComponent implements OnInit {
   }
 
   onClickSaveDate(id) {
-    this.dateSelectionated = this.games[id];
     switch (this.actualChart) {
       case 'bar':
         this.timePerButtonChart();
