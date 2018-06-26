@@ -56,7 +56,17 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  onClickSaveDate(id) {
+  onClickSaveDate(id, event) {
+    const selected = document.getElementsByClassName('mat-list-item');
+    console.log(selected);
+    
+    for (let i = 0; i < selected.length; i++) {
+      selected[i].className = selected[i].className.replace(' active', '');
+    }
+
+    event.currentTarget.className += ' active';
+
+    this.dateSelectionated = this.games[id];
     switch (this.actualChart) {
       case 'bar':
         this.timePerButtonChart();
